@@ -3,7 +3,7 @@
 
 # Terraform Cloud Backend File
 ## Comment or Delete this section if modified to have a backend file
-*.backend.tf
+*backend.tf
 
 # .tfstate files
 *.tfstate
