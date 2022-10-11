@@ -5,9 +5,11 @@
 ## Comment or Delete this section if modified to have a backend file
 *backend.tf
 
-# .tfstate files
+# .tfstate files, locks, and registry
 *.tfstate
 *.tfstate.*
+*.terraform.lock.hcl
+*.terraform
 
 # Crash log files
 crash.log
