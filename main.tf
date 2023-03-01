@@ -145,3 +145,10 @@ resource "azurerm_key_vault_secret" "example" {
   value        = random_password.password.result
   key_vault_id = resource.azurerm_key_vault.kv_resource.id
 }
+
+# Create Key
+resource "azurerm_key_vault_secret" "example2" {
+  name         = "randompass2"
+  value        = "mypassword"
+  key_vault_id = resource.azurerm_key_vault.kv_resource.id
+}
