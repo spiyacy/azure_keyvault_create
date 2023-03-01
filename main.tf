@@ -156,7 +156,7 @@ resource "random_password" "password" {
 
 # Create Key
 resource "azurerm_key_vault_secret" "example" {
-  name         = "random_test"
+  name         = "randompass"
   value        = random_password.password.result
   key_vault_id = resource.azurerm_key_vault.kv_resource.id
 }
