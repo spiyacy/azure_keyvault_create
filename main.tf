@@ -51,7 +51,8 @@ resource "azurerm_key_vault" "kv_resource" {
       "Get",
       "Delete",
       "Purge",
-      "Recover"
+      "Recover",
+      "List"
     ]
   }
 
