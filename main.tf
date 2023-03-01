@@ -146,7 +146,7 @@ resource "azurerm_key_vault_secret" "example" {
   key_vault_id = resource.azurerm_key_vault.kv_resource.id
 }
 
-# Create Key
+# Create Key2
 resource "azurerm_key_vault_secret" "example2" {
   name         = "randompass2"
   value        = "mypassword"
