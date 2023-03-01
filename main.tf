@@ -145,3 +145,16 @@ resource "azurerm_key_vault_access_policy" "application_policy" {
       "Set",
     ]
 }
+
+
+# Generate random text for a unique ID
+resource "random_password" "password" {
+    byte_length = 5
+}
+
+# Create Key
+resource "azurerm_key_vault_secret" "example" {
+  name         = "random_test"
+  value        = random_password.password.result
+  key_vault_id = resource.azurerm_key_vault.kv_resource.id
+}
