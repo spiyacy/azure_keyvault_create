@@ -37,7 +37,8 @@ resource "random_password" "password" {
 
 # Create Key
 resource "azurerm_key_vault_secret" "example" {
-  name         = "randompassvdata"
+  count = 3
+  name         = "devpass${count.index}"
   value        = random_password.password.result
   key_vault_id = data.azurerm_key_vault.example.id
 }
