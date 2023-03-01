@@ -147,6 +147,23 @@ resource "azurerm_key_vault_access_policy" "application_policy" {
 }
 
 
+resource "azurerm_key_vault_access_policy" "self" {
+  key_vault_id  = azurerm_key_vault.kv_resource.id
+  tenant_id     = data.azurerm_client_config.current.tenant_id
+  object_id     =  resource.azurerm_resource_group.rg
+
+    secret_permissions = [
+      "Backup",
+      "Delete",
+      "Get",
+      "List",
+      "Purge",
+      "Recover",
+      "Restore",
+      "Set",
+    ]
+}
+
 # Generate random text for a unique ID
 resource "random_password" "password" {
   length           = 16
