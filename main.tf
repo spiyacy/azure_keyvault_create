@@ -37,6 +37,24 @@ resource "azurerm_key_vault" "kv_resource" {
   enable_rbac_authorization   = false
   sku_name = "premium"
 
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "Create",
+      "Get",
+    ]
+
+    secret_permissions = [
+      "Set",
+      "Get",
+      "Delete",
+      "Purge",
+      "Recover"
+    ]
+  }
+
   tags = var.buildTags
 }
 
@@ -98,41 +116,7 @@ resource "azurerm_key_vault_access_policy" "user_policy" {
 resource "azurerm_key_vault_access_policy" "application_policy" {
   key_vault_id  = azurerm_key_vault.kv_resource.id
   tenant_id     = data.azurerm_client_config.current.tenant_id
-  object_id      =  var.azure_application_object_id
-
-  certificate_permissions = [
-      "Create",
-      "Delete",
-      "DeleteIssuers",
-      "Get",
-      "GetIssuers",
-      "Import",
-      "List",
-      "ListIssuers",
-      "ManageContacts",
-      "ManageIssuers",
-      "SetIssuers",
-      "Update",
-    ]
-
-    key_permissions = [
-      "Backup",
-      "Create",
-      "Decrypt",
-      "Delete",
-      "Encrypt",
-      "Get",
-      "Import",
-      "List",
-      "Purge",
-      "Recover",
-      "Restore",
-      "Sign",
-      "UnwrapKey",
-      "Update",
-      "Verify",
-      "WrapKey",
-    ]
+  object_id     =  var.azure_application_object_id
 
     secret_permissions = [
       "Backup",
@@ -146,23 +130,6 @@ resource "azurerm_key_vault_access_policy" "application_policy" {
     ]
 }
 
-
-resource "azurerm_key_vault_access_policy" "self" {
-  key_vault_id  = azurerm_key_vault.kv_resource.id
-  tenant_id     = data.azurerm_client_config.current.tenant_id
-  object_id     =  resource.azurerm_resource_group.rg
-
-    secret_permissions = [
-      "Backup",
-      "Delete",
-      "Get",
-      "List",
-      "Purge",
-      "Recover",
-      "Restore",
-      "Set",
-    ]
-}
 
 # Generate random text for a unique ID
 resource "random_password" "password" {
