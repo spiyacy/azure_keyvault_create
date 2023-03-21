@@ -123,7 +123,25 @@ resource "azurerm_key_vault_access_policy" "application_policy" {
   tenant_id     = data.azurerm_client_config.current.tenant_id
   object_id     =  var.azure_application_object_id
 
-    secret_permissions = [
+  key_permissions = [
+      "Backup",
+      "Create",
+      "Decrypt",
+      "Delete",
+      "Encrypt",
+      "Get",
+      "Import",
+      "List",
+      "Purge",
+      "Recover",
+      "Restore",
+      "Sign",
+      "UnwrapKey",
+      "Update",
+      "Verify",
+      "WrapKey",
+    ]
+   secret_permissions = [
       "Backup",
       "Delete",
       "Get",
