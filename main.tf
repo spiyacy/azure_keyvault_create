@@ -44,22 +44,19 @@ resource "azurerm_key_vault" "kv_resource" {
     key_permissions = [
       "Create",
       "Get",
-      "Set",
-      "Get",
+      "Import",
       "Delete",
-      "Purge",
-      "Recover",
-      #"List",
+      "Decrypt",
+      "List",
     ]
 
     secret_permissions = [
-      "Create",
       "Set",
       "Get",
       "Delete",
       "Purge",
       "Recover",
-      #"List",
+      "List",
     ]
   }
 
