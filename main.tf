@@ -49,7 +49,7 @@ resource "azurerm_key_vault" "kv_resource" {
       "Delete",
       "Purge",
       "Recover",
-      "List",
+      #"List",
     ]
 
     secret_permissions = [
@@ -59,7 +59,7 @@ resource "azurerm_key_vault" "kv_resource" {
       "Delete",
       "Purge",
       "Recover",
-      "List",
+      #"List",
     ]
   }
 
