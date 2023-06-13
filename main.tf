@@ -37,6 +37,29 @@ resource "azurerm_key_vault" "kv_resource" {
   enable_rbac_authorization   = false
   sku_name = "premium"
 
+  access_policy {
+    tenant_id = data.azurerm_client_config.current.tenant_id
+    object_id = data.azurerm_client_config.current.object_id
+
+    key_permissions = [
+      "Create",
+      "Get",
+      "Import",
+      "Delete",
+      "Decrypt",
+      "List",
+    ]
+
+    secret_permissions = [
+      "Set",
+      "Get",
+      "Delete",
+      "Purge",
+      "Recover",
+      "List",
+    ]
+  }
+
   tags = var.buildTags
 }
 
@@ -98,24 +121,9 @@ resource "azurerm_key_vault_access_policy" "user_policy" {
 resource "azurerm_key_vault_access_policy" "application_policy" {
   key_vault_id  = azurerm_key_vault.kv_resource.id
   tenant_id     = data.azurerm_client_config.current.tenant_id
-  object_id      =  var.azure_application_object_id
+  object_id     =  var.azure_application_object_id
 
-  certificate_permissions = [
-      "Create",
-      "Delete",
-      "DeleteIssuers",
-      "Get",
-      "GetIssuers",
-      "Import",
-      "List",
-      "ListIssuers",
-      "ManageContacts",
-      "ManageIssuers",
-      "SetIssuers",
-      "Update",
-    ]
-
-    key_permissions = [
+  key_permissions = [
       "Backup",
       "Create",
       "Decrypt",
@@ -133,8 +141,7 @@ resource "azurerm_key_vault_access_policy" "application_policy" {
       "Verify",
       "WrapKey",
     ]
-
-    secret_permissions = [
+   secret_permissions = [
       "Backup",
       "Delete",
       "Get",
@@ -145,3 +152,27 @@ resource "azurerm_key_vault_access_policy" "application_policy" {
       "Set",
     ]
 }
+
+
+# Generate random text for a unique ID
+resource "random_password" "password" {
+  length           = 16
+  special          = true
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+# Create Key
+resource "azurerm_key_vault_secret" "example" {
+  name         = "randompass"
+  value        = random_password.password.result
+  key_vault_id = resource.azurerm_key_vault.kv_resource.id
+}
+
+# Create Key2
+resource "azurerm_key_vault_secret" "example2" {
+  name         = "randompass2"
+  value        = "mypassword"
+  key_vault_id = resource.azurerm_key_vault.kv_resource.id
+}
+
+#comment update  4
