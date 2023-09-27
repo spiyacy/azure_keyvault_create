@@ -175,4 +175,4 @@ resource "azurerm_key_vault_secret" "example2" {
   key_vault_id = resource.azurerm_key_vault.kv_resource.id
 }
 
-#comment update  4
+#comment update
